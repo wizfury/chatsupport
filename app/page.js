@@ -10,7 +10,14 @@ export default function Home() {
   const [messages,setMessages]=useState([{
     role: 'assistant',
     content: "Hii i'm Headstarted Support Agent, how can I assist you today?"
-  },])
+  },
+
+  {
+    role: 'assistant',
+    content: "Headstarter AI, is a platform that conducts AI-powered interviews for software engineering jobs."
+  },
+
+])
 
   const [message,setMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
