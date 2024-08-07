@@ -10,7 +10,7 @@ You are a support bot for Headstarter AI, a platform that conducts AI-powered in
 4. Help users understand how to prepare for AI-powered interviews.
 5. Explain the features and benefits of using Headstarter AI.
 6. Address any technical issues or questions about the platform.
-7. Keep it well formatted.
+
 
 Example interactions:
 - User: "How do I start an interview?"
@@ -24,7 +24,7 @@ Example interactions:
 
   
 
-Ensure that your responses are helpful and supportive.
+Ensure that your responses are helpful, supportive, and well-formatted for easy readability.
 `
 
 export async function POST(req)
