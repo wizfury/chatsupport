@@ -1,18 +1,34 @@
 'use client'
 import Image from "next/image";
 import { useState,useRef,useEffect } from "react"
-import {Box,Stack, TextField,Button} from "@mui/material"
+import {Box,Stack, TextField,Button,Typography, ThemeProvider, createTheme} from "@mui/material"
+import TypingEffect from './TypingEffect'; 
+
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#90caf9', // light blue
+    },
+    secondary: {
+      main: '#f48fb1', // pink
+    },
+    background: {
+      default: '#121212', // dark background
+      paper: '#1e1e1e', // slightly lighter dark background
+    },
+    text: {
+      primary: '#ffffff', // white text
+    },
+  },
+});
 
 
 
 export default function Home() {
 
   const [messages,setMessages]=useState([
-     {
-    role: 'assistant',
-    content: "Headstarter AI, is a platform that conducts AI-powered interviews for software engineering jobs."
-  },
-
     {
     role: 'assistant',
     content: "Hii i'm Headstarted Support Agent, how can I assist you today?"
@@ -95,21 +111,41 @@ useEffect(() => {
 
 
   return (
+
+  <ThemeProvider theme={darkTheme}>
   <Box 
   width="100vw" 
   height="100vh" 
   display={"flex"} 
   flexDirection={'column'} 
   justifyContent={"center"} 
-  alignItems={"center"}>
+  alignItems={"center"}
+  bgcolor={'background.default'}
+  color={"text.primary"}
+  p={2}
+  >
+     <Typography variant="h3" alignItems={"center"} gutterBottom color="primary">
+          Welcome to Headstarter AI Support
+        </Typography>
+
+    <Box display="flex" p={2} alignItems="center">
+          <TypingEffect
+            text="Headstarter AI is a platform that conducts AI-powered interviews for software engineering jobs."
+            speed={75} color={'secondary'}
+          />
+        </Box>
+      
+      
 
     <Stack
     direction={"column"}
     width={"500px"}
     height={"700px"}
-    border={"1px solid black"}
+    border={"1px solid #333"}
     p={2}
     spacing={3}
+    bgcolor={"Background.paper"}
+    borderRadius={2}
     >
       <Stack 
       direction={"column"} 
@@ -160,6 +196,7 @@ useEffect(() => {
     </Stack>
 
   </Box>
+  </ThemeProvider>
   
 )
   
