@@ -31,7 +31,7 @@ export default function Home() {
   const [messages,setMessages]=useState([
     {
     role: 'assistant',
-    content: "Hii i'm Headstarted Support Agent, how can I assist you today?"
+    content: "Hii i'm Headstarter Support Agent, how can I assist you today?"
   },
 
  
@@ -130,7 +130,7 @@ useEffect(() => {
 
     <Box display="flex" p={2} alignItems="center">
           <TypingEffect
-            text="Headstarter AI is a platform that conducts AI-powered interviews for software engineering jobs."
+            text="Headstarter AI, is a platform that conducts AI-powered interviews for software engineering jobs."
             speed={75} color={'secondary'}
           />
         </Box>
