@@ -123,6 +123,7 @@ useEffect(() => {
   bgcolor={'background.default'}
   color={"text.primary"}
   p={2}
+  overflow="hidden"
   >
      <Typography variant="h3" alignItems={"center"} gutterBottom color="primary">
           Welcome to Headstarter AI Support
@@ -163,11 +164,13 @@ useEffect(() => {
             }>
 
               <Box
+              
               bgcolor={
                 message.role==='assistant'? 'primary.main':'secondary.main'
               }
               color={"white"}
-              borderRadius={16}
+              borderRadius={4}
+
               p={3}>
                 {message.content}
 
