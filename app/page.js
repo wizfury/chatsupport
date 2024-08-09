@@ -146,6 +146,7 @@ useEffect(() => {
     p={2}
     spacing={3}
     bgcolor={"Background.paper"}
+    overflow={"hidden"}
     borderRadius={2}
     >
       <Stack 
