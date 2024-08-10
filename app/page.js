@@ -177,19 +177,29 @@ useEffect(() => {
         <Button 
           variant="outlined" 
           color="primary"
-          sx={{ position: 'absolute', right: 16, top: 16 }}
+          sx={{ 
+            position: 'absolute', 
+            right: 16, 
+            top: 16 
+          }}
           onClick={handleLogin}
+          disabled={authLoading} // Disable button while auth is in progress
         >
-          Login
+          {authLoading ? 'Loading...' : 'Login'}
         </Button>
       ) : (
         <Button 
           variant="outlined" 
           color="primary"
-          sx={{ position: 'absolute', right: 16, top: 16 }}
+          sx={{ 
+            position: 'absolute', 
+            right: 16, 
+            top: 16 
+          }}
           onClick={handleLogout}
+          disabled={authLoading} // Disable button while auth is in progress
         >
-          Logout
+          {authLoading ? 'Logging out...' : 'Logout'}
         </Button>
       )}
     </Box>
