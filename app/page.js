@@ -38,24 +38,24 @@ const [authLoading, setAuthLoading] = useState(false);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
-      setAuthLoading(false); // Ensure loading state is reset when auth state changes
+      setAuthLoading(false); 
     });
 
-    return () => unsubscribe(); // Cleanup subscription on unmount
+    return () => unsubscribe(); 
   }, []);
 
   const handleLogin = async () => {
-    setAuthLoading(true); // Set loading state when login is initiated
+    setAuthLoading(true); 
     const user = await signInWithGoogle();
     if (!user) {
-      setAuthLoading(false); // Reset loading state if login was unsuccessful
+      setAuthLoading(false); 
     }
   };
 
   const handleLogout = async () => {
-    setAuthLoading(true); // Set loading state when logout is initiated
+    setAuthLoading(true); 
     await logOut();
-    setAuthLoading(false); // Reset loading state after logout
+    setAuthLoading(false); 
   };
 
 

@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  apiKey: process.env.FIREBASE_API_KEY,
   authDomain: "chatsupport-39229.firebaseapp.com",
   projectId: "chatsupport-39229",
   storageBucket: "chatsupport-39229.appspot.com",
