@@ -3,6 +3,9 @@ import Image from "next/image";
 import { useState,useRef,useEffect } from "react"
 import {Box,Stack, TextField,Button,Typography, ThemeProvider, createTheme} from "@mui/material"
 import TypingEffect from './TypingEffect'; 
+import { signInWithGoogle, logOut } from "./authentication"; // adjust the path if necessary
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase"; 
 
 
 const darkTheme = createTheme({
@@ -27,6 +30,34 @@ const darkTheme = createTheme({
 
 
 export default function Home() {
+
+  const [user, setUser] = useState(null);
+const [authLoading, setAuthLoading] = useState(false);
+
+  // Monitor authentication state
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+      setAuthLoading(false); // Ensure loading state is reset when auth state changes
+    });
+
+    return () => unsubscribe(); // Cleanup subscription on unmount
+  }, []);
+
+  const handleLogin = async () => {
+    setAuthLoading(true); // Set loading state when login is initiated
+    const user = await signInWithGoogle();
+    if (!user) {
+      setAuthLoading(false); // Reset loading state if login was unsuccessful
+    }
+  };
+
+  const handleLogout = async () => {
+    setAuthLoading(true); // Set loading state when logout is initiated
+    await logOut();
+    setAuthLoading(false); // Reset loading state after logout
+  };
+
 
   const [messages,setMessages]=useState([
     {
@@ -125,10 +156,43 @@ useEffect(() => {
   p={2}
   overflow="hidden"
   >
-     <Typography variant="h3" alignItems={"center"} gutterBottom color="primary">
-          Welcome to Headstarter AI Support
-        </Typography>
+    <Box 
+      width="100%" 
+      display="flex" 
+      justifyContent="center" 
+      alignItems="center"
+      position="relative"
+      p={2}
+      mb={2}
+    >
+      <Typography 
+        variant="h4" 
+        color="primary"
+        sx={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}
+      >
+        Headstarter AI Support
+      </Typography>
 
+      {!user ? (
+        <Button 
+          variant="outlined" 
+          color="primary"
+          sx={{ position: 'absolute', right: 16, top: 16 }}
+          onClick={handleLogin}
+        >
+          Login
+        </Button>
+      ) : (
+        <Button 
+          variant="outlined" 
+          color="primary"
+          sx={{ position: 'absolute', right: 16, top: 16 }}
+          onClick={handleLogout}
+        >
+          Logout
+        </Button>
+      )}
+    </Box>
     <Box display="flex" p={2} alignItems="center">
           <TypingEffect
             text="Headstarter AI, is a platform that conducts AI-powered interviews for software engineering jobs."
