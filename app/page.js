@@ -1,8 +1,8 @@
 'use client'
-import Image from "next/image";
 import { useState,useRef,useEffect } from "react"
-import {Box,Stack, TextField,Button,Typography, ThemeProvider, createTheme} from "@mui/material"
+import {Box,Stack, TextField,Button,Typography, ThemeProvider, createTheme, IconButton} from "@mui/material"
 import TypingEffect from './TypingEffect'; 
+import StarIcon from '@mui/icons-material/Star';
 import { signInWithGoogle, logOut } from "./authentication"; // adjust the path if necessary
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase"; 
@@ -70,6 +70,11 @@ const [authLoading, setAuthLoading] = useState(false);
 
   const [message,setMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  //added feature
+  const [feedback, setFeedback] = useState(0)
+  const [feedbackMessage, setFeedbackMessage] = useState(''); 
+  const [showFeedbackInput, setShowFeedbackInput] = useState(false); 
+  const [isFeedbackSubmitted, setIsFeedbackSubmitted] = useState(false);
 
   const sendMessage = async () => {
     if (!message.trim() || isLoading) return;
@@ -132,6 +137,22 @@ const handleKeyPress = (event)=> {
 
 const messagesEndRef = useRef(null)
 
+//added feature
+const handleRatingSubmit = (rating) => {
+  setFeedback(rating);
+  setShowFeedbackInput(true); 
+};
+
+const handleFeedbackSubmit = () => {
+  if (feedback > 0 && feedbackMessage.trim() !== '') {
+    console.log(`Rating: ${feedback}, Feedback: ${feedbackMessage}`);
+    setIsFeedbackSubmitted(true);
+    setShowFeedbackInput(false);
+  } else {
+    alert('Please enter your feedback message.');
+  }
+};
+
 const scrollToBottom = () => {
   messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
 }
@@ -146,7 +167,7 @@ useEffect(() => {
   <ThemeProvider theme={darkTheme}>
   <Box 
   width="100vw" 
-  height="100vh" 
+  height="100%" 
   display={"flex"} 
   flexDirection={'column'} 
   justifyContent={"center"} 
@@ -273,9 +294,37 @@ useEffect(() => {
         </Stack>
     </Stack>
 
+    <Box mt={2} display="flex" flexDirection="column" alignItems="center" bgcolor={"Background.paper"}>
+          <Typography variant="h6" color="primary">
+            Rate your experience:
+          </Typography>
+          
+          <Box display="flex" justifyContent="center" mt={2}>
+            {[1, 2, 3, 4, 5].map((value) => (
+              <IconButton key={value} onClick={() => handleRatingSubmit(value)}>
+                <StarIcon color={feedback >= value ? 'primary' : 'disabled'} />
+              </IconButton>
+            ))}
+          </Box>
+
+          {showFeedbackInput && (
+            <Box mt={2} display="flex" flexDirection="column" alignItems="center">
+                <TextField label="Your Feedback" multiline rows={4} variant="outlined" value={feedbackMessage}
+                  onChange={(e) => setFeedbackMessage(e.target.value)} fullWidth sx={{ maxWidth: 500 }} />
+                
+                <Button variant="contained" color="primary" onClick={handleFeedbackSubmit} sx={{ mt: 2 }}>
+                  Submit Feedback
+                </Button>
+            </Box>
+          )}
+
+          {isFeedbackSubmitted && (
+            <Typography variant="body1" color="secondary" sx={{ mt: 2 }}>
+              Thank you for your feedback!
+            </Typography>
+          )}
+        </Box>
   </Box>
   </ThemeProvider>
-  
 )
-  
 }
