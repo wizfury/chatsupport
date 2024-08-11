@@ -1,11 +1,12 @@
 'use client'
 import { useState,useRef,useEffect } from "react"
-import {Box,Stack, TextField,Button,Typography, ThemeProvider, createTheme, IconButton} from "@mui/material"
+import {Box,Stack, TextField,Button,Typography, ThemeProvider, createTheme, IconButton, useMediaQuery} from "@mui/material"
 import TypingEffect from './TypingEffect'; 
 import StarIcon from '@mui/icons-material/Star';
 import { signInWithGoogle, logOut } from "./authentication"; // adjust the path if necessary
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase"; 
+
 
 
 const darkTheme = createTheme({
@@ -31,8 +32,17 @@ const darkTheme = createTheme({
 
 export default function Home() {
 
-  const [user, setUser] = useState(null);
+const [user, setUser] = useState(null);
 const [authLoading, setAuthLoading] = useState(false);
+const isSmallScreen = useMediaQuery('(max-width:600px)');
+const [message,setMessage] = useState('')
+const [isLoading, setIsLoading] = useState(false)
+const [feedback, setFeedback] = useState(0)
+const [feedbackMessage, setFeedbackMessage] = useState(''); 
+const [showFeedbackInput, setShowFeedbackInput] = useState(false); 
+const [isFeedbackSubmitted, setIsFeedbackSubmitted] = useState(false);
+const messagesEndRef = useRef(null)
+const chatContainerRef = useRef(null);
 
  
   useEffect(() => {
@@ -68,12 +78,7 @@ const [authLoading, setAuthLoading] = useState(false);
  
 ])
 
-  const [message,setMessage] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const [feedback, setFeedback] = useState(0)
-  const [feedbackMessage, setFeedbackMessage] = useState(''); 
-  const [showFeedbackInput, setShowFeedbackInput] = useState(false); 
-  const [isFeedbackSubmitted, setIsFeedbackSubmitted] = useState(false);
+
 
   const sendMessage = async () => {
     if (!message.trim() || isLoading) return;
@@ -134,7 +139,7 @@ const handleKeyPress = (event)=> {
     sendMessage()
 }}
 
-const messagesEndRef = useRef(null)
+
 
 //added feature
 const handleRatingSubmit = (rating) => {
@@ -153,7 +158,7 @@ const handleFeedbackSubmit = () => {
 };
 
 
-const chatContainerRef = useRef(null);
+
 useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
@@ -194,7 +199,7 @@ useEffect(() => {
       mb={2}
     >
       <Typography 
-        variant="h4" 
+        variant={isSmallScreen?"h5":"h4"} 
         color="primary"
         sx={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}
       >
@@ -243,7 +248,7 @@ useEffect(() => {
     <Stack
     direction={"column"}
     width={"500px"}
-    height={"550px"}
+    height={"700px"}
     border={"1px solid #333"}
     p={2}
     spacing={3}
