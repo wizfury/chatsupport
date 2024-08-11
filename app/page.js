@@ -179,7 +179,7 @@ useEffect(() => {
   <ThemeProvider theme={darkTheme}>
   <Box 
   width="100vw" 
-  height="100%" 
+  height="100vh" 
   display={"flex"} 
   flexDirection={'column'} 
   justifyContent={"center"} 
@@ -248,7 +248,7 @@ useEffect(() => {
     <Stack
     direction={"column"}
     width={"500px"}
-    height={"700px"}
+    height={"600px"}
     border={"1px solid #333"}
     p={2}
     spacing={3}
