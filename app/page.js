@@ -70,7 +70,6 @@ const [authLoading, setAuthLoading] = useState(false);
 
   const [message,setMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  //added feature
   const [feedback, setFeedback] = useState(0)
   const [feedbackMessage, setFeedbackMessage] = useState(''); 
   const [showFeedbackInput, setShowFeedbackInput] = useState(false); 
@@ -153,13 +152,21 @@ const handleFeedbackSubmit = () => {
   }
 };
 
-const scrollToBottom = () => {
-  messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-}
 
+const chatContainerRef = useRef(null);
 useEffect(() => {
-  scrollToBottom()
-}, [messages])
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+// const scrollToBottom = () => {
+//   messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+// }
+
+// useEffect(() => {
+//   scrollToBottom()
+// }, [messages])
 
 
   return (
@@ -236,7 +243,7 @@ useEffect(() => {
     <Stack
     direction={"column"}
     width={"500px"}
-    height={"700px"}
+    height={"550px"}
     border={"1px solid #333"}
     p={2}
     spacing={3}
@@ -249,7 +256,9 @@ useEffect(() => {
       spacing={2}
       flexGrow={1}
       overflow="auto"
-      maxHeight={"100%"}>
+      maxHeight={"100%"}
+      ref={chatContainerRef}
+      >
         {
           messages.map((message, index)=>(
             <Box
