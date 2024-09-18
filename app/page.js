@@ -6,6 +6,7 @@ import StarIcon from '@mui/icons-material/Star';
 import { signInWithGoogle, logOut } from "./authentication"; // adjust the path if necessary
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase"; 
+import { Analytics } from "@vercel/analytics/react"
 
 
 
@@ -339,6 +340,7 @@ useEffect(() => {
           )}
         </Box>
   </Box>
+  <Analytics/>
   </ThemeProvider>
 )
 }
